@@ -1,0 +1,196 @@
+import {
+  BenefitType,
+  CalendarEvent,
+  Client,
+  DocumentItem,
+  FinancialTransaction,
+  KanbanTask,
+  NotificationItem,
+  PensionProcess,
+  User,
+} from '../types';
+
+export const INITIAL_USERS: User[] = [
+  {
+    id: 'usr-admin-geison',
+    name: 'Geison Murilo Ferreira de Andrade Knuth',
+    email: 'gehknuth@gmail.com',
+    role: 'admin',
+    roleLabel: 'Administrador & Sócio Previdenciarista',
+    phone: '(11) 98765-4321',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
+  },
+];
+
+export const INITIAL_BENEFITS: BenefitType[] = [
+  {
+    id: 'ben-1',
+    name: 'Aposentadoria por Idade Urbana',
+    category: 'Programáveis',
+    code: 'B41',
+    description: 'Benefício concedido aos segurados que atingirem a idade mínima (65 anos homens, 62 anos mulheres) e 15 anos de carência.',
+    defaultChecklist: [
+      'Documento de Identidade (RG) e CPF',
+      'Comprovante de Residência Atualizado',
+      'Extrato Previdenciário CNIS Completo',
+      'Carteiras de Trabalho (CTPS originais)',
+      'Carnês de Contribuição / GPS (se aplicável)',
+      'Procuração e Contrato de Honorários',
+    ],
+  },
+  {
+    id: 'ben-2',
+    name: 'Aposentadoria Especial',
+    category: 'Programáveis',
+    code: 'B42',
+    description: 'Devida ao trabalhador que exerceu atividades com exposição contínua a agentes nocivos químicos, físicos ou biológicos (15, 20 ou 25 anos).',
+    defaultChecklist: [
+      'Documento de Identidade (RG) e CPF',
+      'Comprovante de Residência Atualizado',
+      'CNIS Atualizado',
+      'Carteiras de Trabalho (CTPS)',
+      'Perfil Profissiográfico Previdenciário (PPP assinado)',
+      'Laudo Técnico das Condições Ambientais de Trabalho (LTCAT)',
+      'Contracheques com Adicional de Insalubridade/Periculosidade',
+      'Procuração e Termo de Representação',
+    ],
+  },
+  {
+    id: 'ben-3',
+    name: 'Aposentadoria do Professor',
+    category: 'Programáveis',
+    code: 'B57',
+    description: 'Redução de 5 anos de idade e tempo de contribuição para docentes da Educação Básica, Infantil e Fundamental/Médio.',
+    defaultChecklist: [
+      'RG e CPF',
+      'Comprovante de Residência',
+      'CNIS Detalhado',
+      'CTPS com registros em estabelecimentos de ensino',
+      'Declaração de Tempo de Exercício em Magistério',
+      'Diplomas e Portarias de Nomeação (se servidor público)',
+      'Procuração e Contrato',
+    ],
+  },
+  {
+    id: 'ben-4',
+    name: 'BPC/LOAS Pessoa com Deficiência',
+    category: 'Assistenciais',
+    code: 'B87',
+    description: 'Garantia de um salário mínimo mensal à pessoa com impedimento de longo prazo e renda familiar per capita inferior a 1/4 do salário mínimo.',
+    defaultChecklist: [
+      'RG e CPF do requerente e de todos os membros do grupo familiar',
+      'Comprovante de Residência Atualizado',
+      'Inscrição Atualizada no Cadastro Único (CadÚnico)',
+      'Laudos Médicos Atualizados com CID-10 e Descrição do Impedimento',
+      'Receitas de Medicamentos e Prontuários Médicos',
+      'Exames Complementares e Relatórios Fisioterapêuticos/Terapêuticos',
+      'Comprovantes de Despesas Médicas e Alimentares',
+      'Comprovantes de Renda de todos que residem no domicílio',
+      'Procuração e Declaração de Hipossuficiência',
+    ],
+  },
+  {
+    id: 'ben-5',
+    name: 'BPC/LOAS Idoso (65 anos ou mais)',
+    category: 'Assistenciais',
+    code: 'B88',
+    description: 'Benefício assistencial de um salário mínimo para idosos acima de 65 anos em situação de vulnerabilidade socioeconômica.',
+    defaultChecklist: [
+      'RG e CPF do requerente',
+      'Comprovante de Residência Atualizado',
+      'CadÚnico com NIS atualizado',
+      'Comprovantes de rendimentos do grupo familiar',
+      'Comprovantes de gastos contínuos com remédios e fraldas',
+      'Procuração e Declaração de Renda Familiar',
+    ],
+  },
+  {
+    id: 'ben-6',
+    name: 'Benefício por Incapacidade Temporária (Auxílio-Doença)',
+    category: 'Incapacidade',
+    code: 'B31',
+    description: 'Destinado ao segurado incapaz temporariamente para o trabalho ou atividade habitual por mais de 15 dias consecutivos.',
+    defaultChecklist: [
+      'Documento de Identidade e CPF',
+      'Comprovante de Residência',
+      'Atestado Médico com CID, data e assinatura legível com CRM',
+      'Laudo Médico Detalhado do Especialista',
+      'Exames de Imagem, Sangue ou Biópsia Recentes',
+      'Declaração do Empregador com último dia trabalhado',
+      'Histórico de Internações ou Cirurgias (se houver)',
+      'Procuração Previdenciária',
+    ],
+  },
+  {
+    id: 'ben-7',
+    name: 'Aposentadoria por Incapacidade Permanente (Invalidez)',
+    category: 'Incapacidade',
+    code: 'B32',
+    description: 'Concedida ao trabalhador considerado total e permanentemente incapaz para qualquer atividade laboral e insuscetível de reabilitação.',
+    defaultChecklist: [
+      'RG e CPF',
+      'Comprovante de Residência',
+      'Histórico Médico Completo e Laudo Pericial de Irreversibilidade',
+      'Exames Diagnósticos Evolutivos',
+      'Prontuário Médico de Tratamentos sem Sucesso',
+      'Comprovantes de Receituário Contínuo',
+      'Declaração de Necessidade de Acompanhamento Permanente (se for o caso)',
+      'Procuração e Contrato',
+    ],
+  },
+  {
+    id: 'ben-8',
+    name: 'Pensão por Morte',
+    category: 'Dependentes',
+    code: 'B21',
+    description: 'Paga aos dependentes do segurado falecido que mantinha qualidade de segurado na data do óbito.',
+    defaultChecklist: [
+      'Certidão de Óbito do Segurado Instituidor',
+      'RG e CPF do Falecido e do Dependente Requerente',
+      'Certidão de Casamento ou Provas de União Estável (mínimo 3 provas)',
+      'Certidão de Nascimento dos Filhos Menores (se houver)',
+      'CNIS e CTPS do Segurado Falecido',
+      'Comprovante de Residência em nome do casal/dependente',
+      'Procuração e Contrato',
+    ],
+  },
+  {
+    id: 'ben-9',
+    name: 'Salário-Maternidade Rural e Urbano',
+    category: 'Maternidade',
+    code: 'B80',
+    description: 'Benefício devido às seguradas em caso de parto, adoção ou guarda judicial para fins de adoção.',
+    defaultChecklist: [
+      'Certidão de Nascimento da Criança ou Termo de Guarda/Adoção',
+      'RG e CPF da Requerente',
+      'Comprovante de Residência',
+      'Autodeclaração Rural e Notas Fiscais de Produtor (se rural)',
+      'CTPS ou Guias de Recolhimento como Segurada Facultativa/MEI',
+      'Procuração e Contrato',
+    ],
+  },
+  {
+    id: 'ben-10',
+    name: 'Auxílio-Acidente',
+    category: 'Incapacidade',
+    code: 'B94',
+    description: 'Indenização mensal ao segurado que sofreu acidente de qualquer natureza que resultou em sequela que reduza a capacidade laboral.',
+    defaultChecklist: [
+      'RG e CPF',
+      'Comunicação de Acidente de Trabalho (CAT) ou Boletim de Ocorrência',
+      'Prontuário de Atendimento Emergencial',
+      'Exames que comprovem a consolidação da lesão e sequela definitiva',
+      'Laudo médico com descrição da limitação para a função habitual',
+      'Procuração Previdenciária',
+    ],
+  },
+];
+
+// Tabelas limpas para preenchimento do zero pelo usuário
+export const INITIAL_CLIENTS: Client[] = [];
+export const INITIAL_PROCESSES: PensionProcess[] = [];
+export const INITIAL_DOCUMENTS: DocumentItem[] = [];
+export const INITIAL_TRANSACTIONS: FinancialTransaction[] = [];
+export const INITIAL_EVENTS: CalendarEvent[] = [];
+export const INITIAL_TASKS: KanbanTask[] = [];
+export const INITIAL_NOTIFICATIONS: NotificationItem[] = [];

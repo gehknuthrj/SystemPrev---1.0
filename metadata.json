@@ -1,0 +1,7 @@
+{
+  "name": "PrevConsult - Gestão Previdenciária",
+  "description": "Sistema CRM/ERP completo para Consultoria Previdenciária: gestão de clientes, processos, checklist de benefícios, documentos, financeiro, agenda e tarefas Kanban.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
