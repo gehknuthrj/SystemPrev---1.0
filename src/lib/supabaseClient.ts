@@ -1,15 +1,20 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
-// Access Supabase public environment variables
-const env = (import.meta as unknown as { env: Record<string, string | undefined> }).env || {};
-const rawUrl = (env.VITE_SUPABASE_URL || '').trim();
+// Access Supabase public environment variables safely across build and runtime
+const rawUrl = (
+  (typeof import.meta !== 'undefined' && import.meta.env?.VITE_SUPABASE_URL) ||
+  ''
+).trim();
 
 // Strip trailing /rest/v1/ or trailing slashes if user provided REST endpoint URL instead of base URL
 export const supabaseUrl = rawUrl
   .replace(/\/rest\/v1\/?$/, '')
   .replace(/\/+$/, '');
 
-export const supabaseAnonKey = (env.VITE_SUPABASE_ANON_KEY || '').trim();
+export const supabaseAnonKey = (
+  (typeof import.meta !== 'undefined' && import.meta.env?.VITE_SUPABASE_ANON_KEY) ||
+  ''
+).trim();
 
 export const isSupabaseConfigured = Boolean(
   supabaseUrl &&
